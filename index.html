@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Nexus 🚀 - Community Platform</title>
+    <title>Team Nexus 🚀 - Complete Platform</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -21,6 +21,10 @@
                 </a>
                 <a href="#" onclick="showSection('groups')">
                     <i class="fas fa-layer-group"></i> Groups
+                </a>
+                <a href="#" onclick="showSection('messages')">
+                    <i class="fas fa-comments"></i> Messages
+                    <span class="notification-badge" id="messageBadge">3</span>
                 </a>
                 <a href="#" onclick="showSection('leaderboard')">
                     <i class="fas fa-trophy"></i> Leaderboard
@@ -69,9 +73,9 @@
                         <p id="activePolls">0</p>
                     </div>
                     <div class="stat-card">
-                        <i class="fas fa-star"></i>
-                        <h3>Top Performers</h3>
-                        <p id="topPerformers">0</p>
+                        <i class="fas fa-comments"></i>
+                        <h3>Messages Today</h3>
+                        <p id="messagesToday">0</p>
                     </div>
                 </div>
                 <div class="dashboard-grid">
@@ -84,8 +88,8 @@
                         <div id="dashboardGroups" class="mini-group-list"></div>
                     </div>
                     <div class="card">
-                        <h2>Leaderboard Top 5</h2>
-                        <div id="dashboardLeaderboard" class="mini-leaderboard"></div>
+                        <h2>Recent Messages</h2>
+                        <div id="dashboardMessages" class="mini-messages"></div>
                     </div>
                 </div>
             </div>
@@ -107,6 +111,44 @@
                     <button class="filter-btn" onclick="filterGroups('my')">My Groups</button>
                 </div>
                 <div id="groupsGrid" class="groups-grid"></div>
+            </div>
+        </section>
+
+        <!-- Messages Section (NEW) -->
+        <section id="messages" class="section">
+            <div class="container">
+                <div class="messages-container">
+                    <div class="messages-sidebar">
+                        <div class="messages-search">
+                            <input type="text" placeholder="Search conversations..." id="messageSearch">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="conversation-list" id="conversationList">
+                            <!-- Conversations will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="messages-main">
+                        <div class="chat-header" id="chatHeader">
+                            <div class="chat-header-info">
+                                <h3>Select a conversation</h3>
+                                <p>Choose a group or member to start messaging</p>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="no-chat-selected">
+                                <i class="fas fa-comments"></i>
+                                <h3>Team Nexus Chat</h3>
+                                <p>Select a conversation to start messaging</p>
+                            </div>
+                        </div>
+                        <div class="chat-input" id="chatInput" style="display: none;">
+                            <input type="text" placeholder="Type your message..." id="messageInput" onkeypress="handleMessageKeyPress(event)">
+                            <button onclick="sendMessage()" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -211,6 +253,9 @@
             <h2>Create New Poll</h2>
             <form id="createPollForm" onsubmit="createPoll(event)">
                 <input type="text" placeholder="Poll Question" required id="pollQuestion">
+                <select id="pollGroup" required>
+                    <option value="">Select Group (optional)</option>
+                </select>
                 <div id="pollOptions">
                     <input type="text" placeholder="Option 1" required class="poll-option">
                     <input type="text" placeholder="Option 2" required class="poll-option">
@@ -223,4 +268,4 @@
 
     <script src="script.js"></script>
 </body>
-  </html>
+                        </html>
