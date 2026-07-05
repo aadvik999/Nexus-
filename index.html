@@ -1,157 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nexus - Team. Vote. Grow.</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Nexus 🚀 - Community Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-users"></i>
+                <span>Team Nexus</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active" onclick="showSection('dashboard')">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#" onclick="showSection('groups')">
+                    <i class="fas fa-layer-group"></i> Groups
+                </a>
+                <a href="#" onclick="showSection('leaderboard')">
+                    <i class="fas fa-trophy"></i> Leaderboard
+                </a>
+                <a href="#" onclick="showSection('members')">
+                    <i class="fas fa-user-friends"></i> Members
+                </a>
+                <a href="#" onclick="showSection('voting')">
+                    <i class="fas fa-vote-yea"></i> Voting
+                </a>
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar" id="currentUserAvatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="dropdown" id="userDropdown">
+                    <a href="#" onclick="showSection('profile')">My Profile</a>
+                    <a href="#" onclick="showSection('myGroups')">My Groups</a>
+                    <a href="#" onclick="showSection('settings')">Settings</a>
+                    <a href="#" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<header>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <h1 class="section-title">Welcome to Team Nexus 🚀</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Total Members</h3>
+                        <p id="totalMembers">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-layer-group"></i>
+                        <h3>Active Groups</h3>
+                        <p id="activeGroups">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-vote-yea"></i>
+                        <h3>Active Polls</h3>
+                        <p id="activePolls">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <h3>Top Performers</h3>
+                        <p id="topPerformers">0</p>
+                    </div>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h2>Recent Activity</h2>
+                        <div id="recentActivity" class="activity-list"></div>
+                    </div>
+                    <div class="card">
+                        <h2>Your Groups</h2>
+                        <div id="dashboardGroups" class="mini-group-list"></div>
+                    </div>
+                    <div class="card">
+                        <h2>Leaderboard Top 5</h2>
+                        <div id="dashboardLeaderboard" class="mini-leaderboard"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<div class="logo">
-NEXUS
-</div>
+        <!-- Groups Section -->
+        <section id="groups" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">Groups</h1>
+                    <button class="btn btn-primary" onclick="openCreateGroupModal()">
+                        <i class="fas fa-plus"></i> Create Group
+                    </button>
+                </div>
+                <div class="groups-filter">
+                    <button class="filter-btn active" onclick="filterGroups('all')">All</button>
+                    <button class="filter-btn" onclick="filterGroups('public')">Public</button>
+                    <button class="filter-btn" onclick="filterGroups('private')">Private</button>
+                    <button class="filter-btn" onclick="filterGroups('my')">My Groups</button>
+                </div>
+                <div id="groupsGrid" class="groups-grid"></div>
+            </div>
+        </section>
 
-<nav>
+        <!-- Leaderboard Section -->
+        <section id="leaderboard" class="section">
+            <div class="container">
+                <h1 class="section-title">Leaderboard 🏆</h1>
+                <div class="leaderboard-container">
+                    <div id="leaderboardList" class="leaderboard-list"></div>
+                </div>
+            </div>
+        </section>
 
-<a href="#">Home</a>
+        <!-- Members Section -->
+        <section id="members" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">Team Members</h1>
+                    <div class="search-box">
+                        <input type="text" id="memberSearch" placeholder="Search members..." onkeyup="searchMembers()">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div id="membersGrid" class="members-grid"></div>
+            </div>
+        </section>
 
-<a href="#features">Features</a>
+        <!-- Voting Section -->
+        <section id="voting" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">Voting & Polls</h1>
+                    <button class="btn btn-primary" onclick="openCreatePollModal()">
+                        <i class="fas fa-plus"></i> Create Poll
+                    </button>
+                </div>
+                <div id="pollsGrid" class="polls-grid"></div>
+            </div>
+        </section>
 
-<a href="#about">About</a>
+        <!-- Profile Section -->
+        <section id="profile" class="section">
+            <div class="container">
+                <h1 class="section-title">My Profile</h1>
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">Admin User</h2>
+                            <p id="profileRole">Admin</p>
+                            <p id="profileJoinDate">Member since: Jan 2024</p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="editProfile()">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <h3>Groups</h3>
+                            <p id="profileGroups">0</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Followers</h3>
+                            <p id="profileFollowers">0</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Following</h3>
+                            <p id="profileFollowing">0</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Points</h3>
+                            <p id="profilePoints">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-<a href="login.html" class="btn">Login</a>
+    <!-- Modals -->
+    <div id="createGroupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('createGroupModal')">&times;</span>
+            <h2>Create New Group</h2>
+            <form id="createGroupForm" onsubmit="createGroup(event)">
+                <input type="text" placeholder="Group Name" required id="groupName">
+                <textarea placeholder="Group Description" required id="groupDescription"></textarea>
+                <select id="groupPrivacy" required>
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Create Group</button>
+            </form>
+        </div>
+    </div>
 
-</nav>
+    <div id="createPollModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('createPollModal')">&times;</span>
+            <h2>Create New Poll</h2>
+            <form id="createPollForm" onsubmit="createPoll(event)">
+                <input type="text" placeholder="Poll Question" required id="pollQuestion">
+                <div id="pollOptions">
+                    <input type="text" placeholder="Option 1" required class="poll-option">
+                    <input type="text" placeholder="Option 2" required class="poll-option">
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="addPollOption()">Add Option</button>
+                <button type="submit" class="btn btn-primary">Create Poll</button>
+            </form>
+        </div>
+    </div>
 
-</header>
-
-<section class="hero">
-
-<div class="hero-text">
-
-<h1>
-Build Communities.<br>
-Create Teams.<br>
-Grow Together.
-</h1>
-
-<p>
-Nexus is a modern social platform where people can create groups,
-chat in real time, share ideas, conduct polls, and build amazing communities.
-</p>
-
-<div class="buttons">
-
-<a href="signup.html" class="primary-btn">
-Get Started
-</a>
-
-<a href="login.html" class="secondary-btn">
-Login
-</a>
-
-</div>
-
-</div>
-
-<div class="hero-image">
-
-<div class="phone">
-
-<div class="screen">
-
-<h2>Nexus</h2>
-
-<p>✔ Community Groups</p>
-
-<p>✔ Real-time Chat</p>
-
-<p>✔ Poll Voting</p>
-
-<p>✔ Notifications</p>
-
-<p>✔ Team Collaboration</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="features" class="features">
-
-<h2>Features</h2>
-
-<div class="cards">
-
-<div class="card">
-
-<h3>Groups</h3>
-
-<p>Create unlimited public and private groups.</p>
-
-</div>
-
-<div class="card">
-
-<h3>Chat</h3>
-
-<p>Fast real-time messaging with every group.</p>
-
-</div>
-
-<div class="card">
-
-<h3>Polls</h3>
-
-<p>Create polls and let members vote instantly.</p>
-
-</div>
-
-<div class="card">
-
-<h3>Profiles</h3>
-
-<p>Personal profiles with followers and activity.</p>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="about" class="about">
-
-<h2>Why Nexus?</h2>
-
-<p>
-
-Designed for creators, students, developers, gamers and organizations.
-Everything you need for community building in one place.
-
-</p>
-
-</section>
-
-<footer>
-
-<p>
-© 2026 Nexus. All Rights Reserved.
-</p>
-
-</footer>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
-</html>
+  </html>
